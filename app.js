@@ -51,7 +51,7 @@ connectToDb()
       if (searchText) {
         query = {
           $or: [
-            { name: { $regex: searchText, $options: 'i' } },
+            { subject: { $regex: searchText, $options: 'i' } },
             { location: { $regex: searchText, $options: 'i' } }
           ]
         }
