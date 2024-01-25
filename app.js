@@ -30,13 +30,13 @@ connectToDb()
   .catch((err) => {
     console.log("Error starting server: ", err);
   });
-  const updateLesson = (lessonId, spaces) => {
+  const updateLesson = (lessonId, availableInventory) => {
     const db = getDb();
     const collection = db.collection("lesson");
   
     collection.findOneAndUpdate(
       { _id: ObjectId(lessonId) },
-      { $inc: { spaces: -spaces } },
+      { $inc: { availableInventory: -availableInventory } },
       (err, result) => {
         if (err) throw err;
       }
@@ -51,7 +51,7 @@ connectToDb()
       if (searchText) {
         query = {
           $or: [
-            { subject: { $regex: searchText, $options: 'i' } },
+            { name: { $regex: searchText, $options: 'i' } },
             { location: { $regex: searchText, $options: 'i' } }
           ]
         }
@@ -76,8 +76,6 @@ connectToDb()
     collection.insertOne(order, (err, result) => {
       if (err) throw err;
 
-      // updateLesson(order.lesson_id, order.spaces);
-
       res.json(result);
     });
   } catch (err) {
@@ -87,9 +85,9 @@ connectToDb()
 
 app.put("/lessons/:id", (req, res) => {
   const lessonId = req.params.id;
-  const spaces = req.body.spaces;
+  const availableInventory = req.body.availableInventory;
 
-  updateLesson(lessonId, spaces);
+  updateLesson(lessonId, availableInventory);
 
   res.send("Lesson updated successfully");
 });  
