@@ -35,7 +35,7 @@ connectToDb()
     const collection = db.collection("lesson");
   
     collection.findOneAndUpdate(
-      { _id: ObjectId(lessonId) },
+      { _id: new ObjectId(lessonId) },
       { $inc: { spaces: -spaces } },
       (err, result) => {
         if (err) throw err;
