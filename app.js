@@ -30,7 +30,8 @@ connectToDb()
   .catch((err) => {
     console.log("Error starting server: ", err);
   });
-  spaces    const db = getDb();
+  const updateLesson = (lessonId, spaces) => {
+    const db = getDb();
     const collection = db.collection("lesson");
   
     collection.findOneAndUpdate(
