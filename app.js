@@ -30,13 +30,12 @@ connectToDb()
   .catch((err) => {
     console.log("Error starting server: ", err);
   });
-  const updateLesson = (lessonId, availableInventory) => {
-    const db = getDb();
+  spaces    const db = getDb();
     const collection = db.collection("lesson");
   
     collection.findOneAndUpdate(
       { _id: ObjectId(lessonId) },
-      { $inc: { availableInventory: -availableInventory } },
+      { $inc: { spaces: -spaces } },
       (err, result) => {
         if (err) throw err;
       }
@@ -85,9 +84,9 @@ connectToDb()
 
 app.put("/lessons/:id", (req, res) => {
   const lessonId = req.params.id;
-  const availableInventory = req.body.availableInventory;
+  const spaces = req.body.spaces;
 
-  updateLesson(lessonId, availableInventory);
+  updateLesson(lessonId, spaces);
 
   res.send("Lesson updated successfully");
 });  
